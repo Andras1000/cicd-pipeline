@@ -1,3 +1,5 @@
+@Library('my-shared-library') _
+
 pipeline {
     agent any
     environment {
@@ -45,7 +47,9 @@ pipeline {
         }
         stage ('Clean up') {
             steps {
-                sh "docker rmi ${imageReference}"
+                script {
+                    mySharedLibrary.removeImage(imageReference)
+                }
             }
         }
     }
